@@ -1,0 +1,191 @@
+$toolname = "teaserfast.ru";
+function tool($toolname){
+echo "\t\033[1;37m \e[1;41;93m TOOL WEB $toolname \e[0m\033[1;37m   \n"; }
+function xem($id,$time){
+	for ($time=$time;$time>-1;$time--){
+  echo "\e[1;95m└──╼\e[1;39m√\e[1;36m√\e[1;91m√\033[1;33m watching\033[1;36mID:$id \033[1;33mwaiting\033[1;35m[\033[0;37m$time\033[1;35m]\033[1;33msecond \e[1;39m√\e[1;36m√\e[1;91m√\r";
+sleep(1);}}
+
+function load1($time){
+$green="\033[1;32m";
+for($j = $time;$j> 0;$j--){
+echo $green."Hết Job Nghỉ$yellow $j Second";
+sleep(1);
+echo "\r";echo "                                                      \r";}}
+
+
+////taodata
+cookie:
+logo();
+tool($toolname);
+$web = "https://teaserfast.ru/u/Typto";
+echo "\033[1;32m- - - - - - - - - - - - - - - - - - - - - - - - - - - -\n";
+echo "\033[0;37m Link Web :  $web\n";
+echo "\033[1;32m- - - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n";
+system("termux-open-url $web");
+echo $coolrs[array_rand($coolrs)]."import User-Agent : ";
+$user=trim(fgets(STDIN));
+echo "\n";
+echo $coolrs[array_rand($coolrs)]."import Cookie : ";
+$cookie=trim(fgets(STDIN));
+@system('clear');
+
+//////khaibao
+
+$hget = array(
+      "Host:$toolname",
+      "user-agent:$user",
+      "sec-ch-ua-mobile:?1",
+      "Upgrade-Insecure-Requests:1",
+      "Content-Type:text/html; charset=UTF-8",
+      "X-Requested-With:XMLHttpRequest",
+      "accept-encoding:gzip, deflate, br, zstd",
+      "sec-fetch-site: same-origin",
+      "sec-fetch-mode: cors",
+      "sec-fetch-dest: empty",
+      "cookie:$cookie"
+);
+      
+$hpost = array(
+      "Host:$toolname",
+      "user-agent:$user",
+      "sec-ch-ua-mobile:?1",
+      "Content-Type:application/x-www-form-urlencoded; charset=UTF-8",
+      "Accept-Encoding:gzip, deflate, br, zstd",
+      "X-Requested-With:XMLHttpRequest",
+      "sec-fetch-mode: cors",
+      "sec-fetch-dest: empty",
+      "cookie:$cookie");
+      
+$url = "https://teaserfast.ru/task/";
+$url1 = "https://teaserfast.ru/ua.html";
+
+$url3 = "https://teaserfast.ru/captcha-start/";
+$url4 = "https://teaserfast.ru/captcha-youtube/";
+$url5 = "https://teaserfast.ru/check-youtube/";
+
+
+key:
+eval(file_get_contents('http://typro.mobie.in/Codephp/Keytool'));
+/////nhan tien
+
+function nhan($login1,$joblam,$id,$nhan,$coolrs,$hget,$url) {
+$login1 = get($url,$hget);
+$coin1=explode(" руб",explode("Основной счет ",$login1)[1])[0];
+
+echo $coolrs[array_rand($coolrs)]."JOB DAY \033[1;35m[\033[1;37m$joblam\033[1;35m]\033[1;36m 🆔️:[\033[1;37m$id\033[1;36m]\033[1;36m";
+echo "🧲\033[1;92m$nhan 💰\033[1;92m$coin1 RUB ✅\n";
+}
+@system('clear');
+menu:
+logo();
+tool($toolname);
+
+$login = get($url,$hget);
+$coin=explode(" руб",explode("Основной счет ",$login)[1])[0];
+
+echo "\033[1;32m=========>>>>>>>>>PROFILE ACCOUNT<<<<<<<<========\n";
+echo $coolrs[array_rand($coolrs)]."\t  Balance: $coin RUP   \n";
+echo duoi(1);
+video:
+while (True){
+	while (True){
+$crxy_values = [
+    "167%3A60",
+    "92%3A109",
+    "212%3A31",
+    "95%3A46",
+    "192%3A74",
+    "247%3A81",
+    "132%3A63"
+];
+
+$random_index = array_rand($crxy_values);
+$random_crxy = $crxy_values[$random_index];
+
+$layid = get($url,$hget);
+$id=explode("<",explode("span>№",$layid)[1])[0];
+$time=explode(" ",explode("Просмотр видео ",$layid)[1])[0];
+$nhan=explode(" ",explode('it_task_earn">',$layid)[1])[0];
+if($id >= "0"){
+echo"\033[1;37m <>GET JOB \033[1;36mID:$id\033[1;37m<>";echo "\r";
+sleep(1);
+
+$layid1 = get($url1,$hget);
+
+$url2 = "https://teaserfast.ru/task/".$id."";
+$xem = get($url2,$hget);
+
+$cu=explode("},",explode("url: '/captcha-youtube/', data:",$xem)[1])[0];
+
+$dt=explode("'",explode("crxy: t, dt: '",$xem)[1])[0];
+$hd=explode("'",explode("', hd: '",$xem)[1])[0];
+$rc=explode("'",explode("', rc: '",$xem)[1])[0];
+///echo "0: $url2\n";
+///echo "0: $cu\n";
+///echo "1: $dt\n";
+///echo "2: $hd\n";
+///echo "3: $rc\n";
+xem($id,$time);
+}else{
+echo "\033[1;37m Hết Job Wait  ";echo "\r";
+for($j = 300;$j> 0;$j--){
+echo $coolrs[array_rand($coolrs)]."\t Hết Job Nghỉ";echo $coolrs[array_rand($coolrs)]." $j ";echo $coolrs[array_rand($coolrs)]."Second";
+sleep(1);
+echo "\r";echo "                                                      \r";}
+goto menu;
+}
+$data1 = "dt=$dt";
+$cap1 = post($url3,$hpost,$data1);
+$timer=explode('}',explode('timer":',$cap1)[1])[0];
+
+$data2 = "yd=$id&hd=$hd&rc=$rc";
+$cap2 = post($url4,$hpost,$data2);
+$suc=explode(',"',explode('success":',$cap2)[1])[0];
+
+/////123ma cap
+$data3 = "crxy=$random_crxy&dt=$dt";
+$cap3 = post($url5,$hpost,$data3);
+$succe=explode('"',explode('{"',$cap3)[1])[0];
+
+////echo "succe $random_crxy\n";
+
+if($succe == "captcha"){
+	goto giaicap;
+    }else{ 
+$joblam=$joblam+1;    	
+nhan($login1,$joblam,$id,$nhan,$coolrs,$hget,$url);
+
+}}}   
+
+giaicap:
+while (True){
+	while ($stt <= 7){
+$data4 = "yd=$id&hd=$hd&rc=$rc";
+$cap4 = post($url4,$hpost,$data4);
+$suc1=explode(',"',explode('success":',$cap4)[1])[0];
+
+//////123 ma cap
+$data5 = "crxy=$random_crxy&dt=$dt";
+$cap5 = post($url5,$hpost,$data5);
+$succe1=explode('"',explode('{"',$cap5)[1])[0];
+$nhan1=explode(" \u",explode("u0430\u043b\u0438 ",$cap5)[1])[0];
+////echo "succe $random_crxy\n";
+///echo "data3 $data3\n";
+if($succe1 == "captcha"){
+
+
+$stt=$stt+1; 
+$stt <= 7;
+echo"\t\033[1;31m ⛔️ Failed Capcha Solution\033[1;36m [$stt] 😡";echo "\r";
+
+    }else{ 
+	
+	echo"\033[1;33m ✅️Solve Captcha Successfully After[\033[1;31m$stt\033[1;32m]times😅";echo "\r";
+$stt=$stt-$stt;
+$joblam=$joblam+1;
+nhan($login1,$joblam,$id,$nhan,$coolrs,$hget,$url);
+goto video;
+}}
+$stt=$stt-$stt;
+goto video;}
