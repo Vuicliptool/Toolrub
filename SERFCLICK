@@ -228,7 +228,7 @@ $n = "\n";$m = "\033[1;31m";$k = "\033[1;32m";$p = "\033[1;37m";$h = "\033[1;34m
 
 
 const
-register_link = "https://serfclick.net/i/83331",
+register_link = "https://serfclick.net/i/322908",
 host = "https://serfclick.net/";
 
 Cetak("Register",register_link);
