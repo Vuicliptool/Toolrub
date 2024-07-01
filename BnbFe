@@ -291,7 +291,7 @@ while(true){
 	}else{
 		print Error("Không phải địa chỉ (BNB) Faucetpay\n");
 		print line();
-		hapus("Nhập địa chỉ (BNB) Faucetpay của bạn");
+		hapus("Nhập địa chỉ ví (BNB) Faucetpay của bạn");
 		goto cookie;
 	}
 	if($bal > 0.000001) {
