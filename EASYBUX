@@ -255,7 +255,7 @@ function h($xml=0){
 
 function dash(){
 	$r = curl(host."user/his_in",h())[1];
-	$user = explode("<",explode("Доброй ночи, <strong>",$r)[1])[0];
+	$user = explode("<",explode("Доброе утро, <strong>",$r)[1])[0];
 	$bal = explode(' ',explode('href="/user/pay" class="text-decoration-none text-dark" style="line-height: inherit;"><strong>',$r)[1])[0];
 	return ["user"=>$user,"bal"=>$bal];
 }
@@ -273,7 +273,7 @@ function Ocr($img){
 }
 ulang:
 $r = dash();
-if(!$r["user"]){
+if(!$r["bal"]){
 	print $m."Cookie Expired!\n";
 	hapus("Cookie");
 	goto cookie;
