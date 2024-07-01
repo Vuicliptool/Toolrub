@@ -228,7 +228,7 @@ $n = "\n";$m = "\033[1;31m";$k = "\033[1;32m";$p = "\033[1;37m";$h = "\033[1;34m
 
 const
 host = "https://bnbfe.com/",
-register_link = "https://bnbfe.com/ref/193822554287",
+register_link = "https://bnbfe.com/ref/193822575925",
 youtube = "https://youtube.com/@iewil";
 
 function h(){
@@ -262,7 +262,7 @@ Cetak("Web",register_link);
 print line();
 Cetak("Faucetpay",$register_Faucetpay);
 print line();
-$user = simpan("Nhập địa chỉ (NNB) Faucetpay của bạn");
+$user = simpan("Nhập địa chỉ ví (NNB) Faucetpay của bạn");
 ua();
 hapus('cookie.txt');
 
