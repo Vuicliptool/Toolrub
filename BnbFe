@@ -262,7 +262,7 @@ Cetak("Web",register_link);
 print line();
 Cetak("Faucetpay",$register_Faucetpay);
 print line();
-$user = simpan("Nhập địa chỉ ví (NNB) Faucetpay của bạn");
+$user = simpan("Nhập địa chỉ ví (BNB) Faucetpay của bạn");
 ua();
 hapus('cookie.txt');
 
