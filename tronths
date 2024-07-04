@@ -282,7 +282,7 @@ while(true){
 	$rewardurl = explode('"',explode('<a target="_blank" href="',$reward)[1])[0];
 	if($rewardurl){
 		curl($rewardurl, h(),'',1);echo "      ";
-		print sukses("claim reward");
+		print sukses("Reward:10 TH/S");
 	}
 	$r = curl(host."withdraw",h(),'',1)[1];
 	$minimum = explode('"',explode('"minimum_withdraw_amount":"',$r)[1])[0];
