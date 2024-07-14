@@ -1,0 +1,105 @@
+$c1="\033[31m";$c2="\033[32m";$c3="\033[33m";$c4="\033[34m";$c5="\033[35m";$c6="\033[36m";$c7="\033[91m";$c8="\033[92m";$c9="\033[93m";$c10="\033[94m";$c11="\033[95m";$c12="\033[96m";$c0="\033[0m";
+$coolrs = array(''.$c1.'',''.$c2.'',''.$c3.'',''.$c4.'',''.$c5.'',''.$c6.'',''.$c7.'',''.$c8.'',''.$c9.'',''.$c10.'',''.$c11.'',''.$c12.'',);
+
+const
+nama_file = "NexfaucetCom",
+register_link = "https://nexfaucet.com/i/57702",
+host = "https://nexfaucet.com/";
+
+logo();
+$n = "\n";$d = "\033[0m";$hp = "\033[101m\033[1;32m";
+print "\t".$hp.str_pad(strtoupper(nama_file), 44, " ", STR_PAD_BOTH).$d.$n.$n;
+
+Cetak("Register",register_link);
+print line();
+cookie:
+simpan("Cookie");
+ua();
+
+
+//system("termux-open-url ".register_link);
+
+//Bot-Core
+function h($xml=0){
+	if($xml){
+		$h[] = "x-requested-with: XMLHttpRequest";
+	}
+	$h[] = "content-type:application/x-www-form-urlencoded; charset=UTF-8";
+	$h[] = "cookie: ".Simpan("Cookie");
+	$h[] = "user-agent: ".ua();
+	return $h;
+}
+
+function dash(){
+	$r = curl(host."user/dashboard",h())[1];
+	$user = trim(explode('</b>', explode('<b>',explode('Username:', $r)[1])[1])[0]);
+	$bal = trim(explode('</b>', explode('<b>',explode('Total earned:', $r)[1])[1])[0]);
+	return ["user"=>$user,"bal"=>$bal];
+}
+
+ulang:
+logo();
+$n = "\n";$d = "\033[0m";$hp = "\033[101m\033[1;32m";
+print "\t".$hp.str_pad(strtoupper(nama_file), 44, " ", STR_PAD_BOTH).$d.$n.$n;
+
+$r = dash();
+if(!$r["bal"]){
+	Cetak("Register",register_link);
+print line();
+	print $m."Cookie Expired!\n";
+	hapus("Cookie");
+	goto cookie;
+}
+echo "\033[1;32m=========>>>>>>>>>\033[0;37mPROFILE ACCOUNT\033[1;32m<<<<<<<<=========\n";
+print $p."Username ".$h."-> ".$p.$r["user"]."   ";
+print $c1."Balance  ".$h."-> ".$p.$r["bal"]."\n";
+duoi(1);
+
+/*Daily
+$r = curl(host."user/bonus", h())[1];
+if(preg_match("/До следующего бонуса осталось/",$r)){
+	$data = "bonusday=Get+a+bonus";
+	$r = curl(host."user/bonus", h(),$data);
+	$ss = explode('",',explode('<script>swal("',$r)[1])[0];
+	if($ss){
+		print $p."Reward   ".$h."-> ".$p.$ss."   ";
+		print $c1."Balance  ".$h."-> ".$p.dash()["bal"]."Coins\n";
+		duoi(1);
+	}
+}*/
+
+while(true){
+	$dat = [];
+	$r = curl(host."user/surf", h())[1];
+	$id = explode("'",explode("showFrame(this, '",$r)[1])[0];
+	if($id){
+		
+		$r = curl(host."view/".$id,h())[1];
+		
+		$timer = explode(';',explode('stattime = ',$r)[1])[0];
+		$cnt = explode("';",explode("var cnt = '",$r)[1])[0];
+		
+		xem($timer,$id);
+		sleep(3);
+		$data = "num=0&cnt=".$cnt;
+		$r = curl(host."ajax/surf/coin.php",h(),$data)[1];
+		$res = explode(';',$r);
+		if($res[0] == "OK"){
+			$job=$job+1;
+            tren(1); echo $coolrs[array_rand($coolrs)]."JOB\033[1;35m[\033[1;37m$job\033[1;35m] Web ";
+			print $c1."Reward ".$c2."-> ".$c3.$res[1]." ";
+			print $c1."Balance".$c2."-> ".$c3.dash()["bal"].$n;
+			duoi(1);
+		}
+		continue;
+		
+	}
+	print $m."Hết Job Lướt Web\n";
+	duoi(1);
+	break;
+}
+
+
+tmr(300);
+
+goto ulang;
