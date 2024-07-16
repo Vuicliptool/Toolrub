@@ -33,7 +33,7 @@ function h($xml=0){
 function dash(){
 	$r = curl(host."user/dashboard",h())[1];
 	$user = trim(explode('</b>', explode('<b>',explode('Username:', $r)[1])[1])[0]);
-	$bal = trim(explode('</b>', explode('<b>',explode('Referral income:', $r)[1])[1])[0]);
+	$bal = trim(explode('</b>', explode('<b>',explode('Total earned:', $r)[1])[1])[0]);
 	return ["user"=>$user,"bal"=>$bal];
 }
 
