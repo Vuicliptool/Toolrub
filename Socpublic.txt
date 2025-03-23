@@ -1,0 +1,95 @@
+
+const
+nama_file = "socpublic",
+register_link = "https://socpublic.com/?i=8785300",
+host = "https://socpublic.com/";
+
+cookie:
+logo();
+vanban("Register".register_link." ");echo "\n";
+print line();
+simpan("Cookie");
+ua();
+
+logo();
+
+function h($xml=0){
+	if($xml){
+		$h[] = "x-requested-with: XMLHttpRequest";
+	}
+	$h[] = "content-type:application/x-www-form-urlencoded; charset=UTF-8";
+	$h[] = "cookie: ".Simpan("Cookie");
+	$h[] = "user-agent: ".ua();
+	return $h;
+}
+function dash(){
+	$r = curl(host."account",h())[1];
+	$user = explode('</span>',explode('<span class="username">',$r)[1])[0];
+	$bal = explode(' ',explode('<span class="bold float-right">',$r)[1])[0];
+	return ["user"=>$user,"bal"=>$bal];
+}
+$r = dash();
+if(!$r["bal"]){
+	print Error("Cookie đã hết hạn!\n");
+	hapus("Cookie");
+	goto cookie;
+}
+echo "\033[1;32m=========>>>>>>>>>PROFILE ACCOUNT<<<<<<<<========\n";
+Cetak1("Username",$r["user"]);
+Cetak("Balance",$r["bal"]);
+duoi(1);
+ulang:
+while(true){
+	$r = curl(host."account/visit.html", h())[1];
+	$user = explode('</span>',explode('<span class="username">',$r)[1])[0];
+	if(!$user){
+		print Error("Cookie đã hết hạn!\n");
+		hapus("Cookie");
+		goto cookie;
+	}
+	$reward = explode(' ',explode('</i> Оплата ',$r)[1])[0];
+	$id = explode('&',explode('<a href="https://socpublic.com/account/visit_view.html?id=',$r)[1])[0];
+	if($id){
+		$r = curl(host."account/visit_view.html?id=".$id, h())[1];
+		$act = explode("'",explode('&act=',$r)[1])[0];
+		if($act == "redirect"){
+			sleep(2);
+			$r = curl(host."account/visit_view.html?id=".$id."&act=".$act, h())[1];
+			$job=$job+1;tren(1);echo $coolrs[array_rand($coolrs)]."JOB\033[1;35m[\033[1;37m$job\033[1;35m]";
+			Cetak1('Reward',$reward);
+			Cetak('Balance',dash()["bal"]);
+			duoi(1);
+			continue;
+		}
+		$tmr = explode(';',explode('var watch_time = ',$r)[1])[0];
+		$bit_id = trim(explode("\n",explode('visit_bid_id:',$r)[1])[0]);
+		$hash = explode("'",explode('&hash=',$r)[1])[0];
+		if(!$bit_id){
+			continue;
+		}
+		if($tmr){
+			typro($tmr, "viewing ads please wait");
+		}
+		$loop = 1;
+		while($loop<=20){
+			$data = "visit_bid_id=".$bit_id;
+			$cap = json_decode(curl(host."visit.ajax?act=get_captcha_test", h(1),$data)[1],1)["vars"];
+			$data = "visit_bid_id=".$bit_id."&captcha_text=".$cap[0];
+			$r = json_decode(curl(host."visit.ajax?act=send_captcha&hash=".$hash, h(),$data)[1],1);
+			if($r["status"] == "success"){
+				$job=$job+1;tren(1);echo $coolrs[array_rand($coolrs)]."JOB\033[1;35m[\033[1;37m$job\033[1;35m]";
+				Cetak1('Reward',explode(' ',explode('<strong>',$r["text"])[1])[0]);
+				Cetak('Balance',dash()["bal"]);
+				duoi(1);
+				break;
+			}
+			$loop++;
+		}
+		continue;
+	}
+	typro(300, "Job Finished, Come Back Later!");
+	goto cookie;
+	break;
+}
+
+goto ulang;
