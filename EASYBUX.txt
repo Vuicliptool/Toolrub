@@ -1,0 +1,158 @@
+
+const
+nama_file = "easybux",
+register_link = "https://easybux.net/i/83331",
+host = "https://easybux.net/";
+cookie:
+logo();
+vanban("Register  ".register_link."");echo "\n";
+print line();
+simpan("Cookie");
+ua();
+//apikey();
+logo();
+//Bot-Core
+function h($xml=0){
+	if($xml){
+		$h[] = "x-requested-with: XMLHttpRequest";
+	}
+	$h[] = "content-type:application/x-www-form-urlencoded; charset=UTF-8";
+	$h[] = "cookie: ".Simpan("Cookie");
+	$h[] = "user-agent: ".ua();
+	return $h;
+}
+function dash(){
+	$r = curl(host."user/his_in",h())[1];
+	$user = explode('<',explode('Ваш Логин</span> <span class="list2">',$r)[1])[0];
+	$bal = explode(' ',explode('href="/user/pay" class="text-decoration-none text-dark" style="line-height: inherit;"><strong>',$r)[1])[0];
+	return ["user"=>$user,"bal"=>$bal];
+}
+function Ocr($img){
+	if(file_exists($img)){
+		$ran = substr(str_shuffle("0123456789abcdef"), 0, 10);
+		$apikey = $ran."88957";
+		$hasil=json_decode(shell_exec('curl --silent -H "apikey:'.$apikey.'" --form "file=@'.$img.'" --form "language=eng" --form "ocrengine=2" --form "isOverlayRequired=false" --form "iscreatesearchablepdf=false" https://api.ocr.space/Parse/Image'))->ParsedResults[0]->ParsedText;
+		$cap = str_split(preg_replace('/\s+/', '', $hasil));
+		if($cap[1] == "+"){
+			return $cap[0]+$cap[2];
+		}
+	}
+	return 0;
+}
+
+$r = dash();
+if(!$r["bal"]){
+	print $m."Cookie Expired!\n";
+	hapus("Cookie");
+	goto cookie;
+}
+echo "\033[1;32m=========>>>>>>>>>\033[0;37mPROFILE ACCOUNT\033[1;32m<<<<<<<<=========\n";
+Cetak1("Username",$r["user"]);
+Cetak("Balance",$r["bal"]);
+duoi(1);
+ulang:
+/*Daily:
+$r = curl(host."user/bonus", h())[1];
+if(preg_match("/До следующего бонуса осталось/",$r)){
+	$data = "bonusday=Get+a+bonus";
+	$r = curl(host."user/bonus", h(),$data);
+	$ss = explode('",',explode('<script>swal("',$r)[1])[0];
+	if($ss){
+		print $h."Reward   ".$p."-> ".$k.$ss."   ";
+		print $h."Balance  ".$p."-> ".$k.dash()["bal"].$n;
+		duoi(1);
+	}
+}*/
+while(true){
+	$dat = [];
+	$r = curl(host."user/surflink", h())[1];
+	$bal = explode(' ',explode('href="/user/pay" class="text-decoration-none text-dark" style="line-height: inherit;"><strong>',$r)[1])[0];
+	if(!$bal){
+		print Error("Cookie đã hết hạn!\n");
+		hapus("Cookie");
+		goto cookie;
+	}
+	$id = explode("'",explode("showFrame(this, '",$r)[1])[0];
+	if($id){
+		$data = "visitserfstarts=".$id;
+		curl(host."user/surflink",h(1),$data)[1];
+		$r = curl(host."view/".$id,h())[1];
+		$timer = explode(';',explode('stattime = ',$r)[1])[0];
+		$cnt = explode("';",explode("var cnt = '",$r)[1])[0];
+		typro($timer, "viewing ads please wait");
+		$data = "num=0&cnt=".$cnt;
+		$r = curl(host."ajax/surf/coin.php",h(),$data)[1];
+		$id_Captcha = explode('"',explode('captcha.php?sid=',$r)[1])[0];//4239104
+		preg_match_all('#<span class="serfnum" onclick="vernum((.*?));">(.*?)</span>#is',$r,$x);
+		for($i=0;$i<count($x[2]);$i++){
+			$dat[$x[3][$i]] = preg_replace("/[^0-9]/","", $x[2][$i])."\n";
+		}
+		//gambar
+		$img = "captcha.png";
+		$r = curl(host."assets/captcha/captcha-st/captcha.php?sid=".$id_Captcha,h())[1];
+		file_put_contents($img,$r);
+		$cap = Ocr($img);
+		if(!$cap){
+			continue;
+		}
+		unlink($img);
+		$num = $dat[$cap];
+		$data = "num=".$num."&cnt=".$cnt;
+		$r = curl(host."ajax/surf/coin.php",h(),$data)[1];
+		$res = explode(';',$r);
+		if($res[0] == "OK"){
+			$job=$job+1;
+            tren(1); echo $coolrs[array_rand($coolrs)]."JOB\033[1;35m[\033[1;37m$job\033[1;35m] Web ";
+            Cetak1("Reward",$res[1]);
+            Cetak("Balance",dash()["bal"]);
+			duoi(1);
+		}
+		continue;
+	}
+	print $m."no more web job\r";
+	sleep(2);
+	break;
+}
+while(true){
+	$dat = [];
+	$r = curl(host."user/vsurf", h())[1];
+	$id = explode("'",explode("showFrame(this, '",$r)[1])[0];
+	if($id){
+		$r = curl(host."viewyt/".$id,array_merge(["Referer: https://easybux.net/user/vsurf"],h()))[1];
+		$cnt = explode("'",explode("cnt = '",$r)[1])[0];
+		$tmr = explode(';',explode('var time=',$r)[1])[0];
+		typro($tmr, "viewing youtube please wait");
+		$data = "num=0&cnt=".$cnt;
+		$r = curl(host."ajax/surfv/coin.php",h(),$data)[1];
+		$id_Captcha = explode('"',explode('captcha.php?sid=',$r)[1])[0];//4239104
+		preg_match_all('#<span class="serfnum" onclick="vernum((.*?));">(.*?)</span>#is',$r,$x);
+		for($i=0;$i<count($x[2]);$i++){
+			$dat[$x[3][$i]] = preg_replace("/[^0-9]/","", $x[2][$i])."\n";
+		}
+		//gambar
+		$img = "captcha.png";
+		$r = curl(host."assets/captcha/captcha-st/captcha.php?sid=".$id_Captcha,h())[1];
+		file_put_contents($img,$r);
+		$cap = Ocr($img);
+		if(!$cap){
+			continue;
+		}
+		unlink($img);
+		$num = $dat[$cap];
+		$data = "num=".$num."&cnt=".$cnt;
+		$r = curl(host."ajax/surfv/coin.php",h(),$data)[1];
+		$res = explode(';',$r);
+		if($res[0] == "OK"){
+			$job=$job+1;
+            tren(1); echo $coolrs[array_rand($coolrs)]."JOB\033[1;35m[\033[1;37m$job\033[1;35m] Youtube ";
+			Cetak1("Reward",$res[1]);
+            Cetak("Balance",dash()["bal"]);
+			duoi(1);
+		}
+		continue;
+	}
+	typro(300, "Job Finished, Come Back Later!");
+	goto cookie;
+	break;
+}
+goto ulang;
